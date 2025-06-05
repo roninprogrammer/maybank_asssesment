@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+# 🗺️ Google Places Autocomplete Search App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React single-page application (SPA) that leverages the Google Places Autocomplete API, Redux, and Redux-Observable to provide an intuitive place search experience. Built with Ant Design for a clean UI and scalable folder structure.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+-  Google Places **Autocomplete**
+-  Display results on **Google Maps**
+-  State management with **Redux Toolkit**
+-  Async actions using **Redux-Observable (RxJS)**
+-  **Search history** stored in Redux
+-  Unit test scaffolding for reducers and epics
+-  High-order layout wrapper with Ant Design
+-  Fully **mockable** for fallback or test mode
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##  Tech Stack
 
-### `npm test`
+- React 18+
+- Redux Toolkit
+- Redux-Observable
+- RxJS
+- Ant Design
+- Google Maps JavaScript SDK
+- Axios
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+##  Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Clone this Repo
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/your-username/google-places-redux-app.git
+cd google-places-redux-app
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Add Google Maps Script
+Open public/index.html and insert this before </body>:
+```bash
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&libraries=places"></script>
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Replace YOUR_GOOGLE_API_KEY with your actual API key.
+If not set, the app will fallback to mock data.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 4. Start the App
+```bash
+npm start
+```
 
-## Learn More
+Visit: http://localhost:3000
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+##  Running Tests (Optional)
+Scaffolding is prepared for unit tests using Jest:
+```bash
+npm run test
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+These should include test cases for reducer initial state, actions, and epic side-effects using Jest & RxJS marbles.
 
-### Code Splitting
+Test files:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+src/redux/__tests__/searchSlice.test.js
 
-### Analyzing the Bundle Size
+src/redux/__tests__/searchEpics.test.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Project Structure
+```bash
+src/
+├── api/
+│   └── googlePlacesApi.js
+├── components/
+│   ├── PlaceSearch.js
+│   ├── SearchHistoryList.js
+│   ├── MapContainer.js
+│   └── withLayout.js
+├── redux/
+│   ├── store.js
+│   ├── slices/
+│   │   └── searchSlice.js
+│   ├── epics/
+│   │   └── searchEpics.js
+│   └── __tests__/
+│       ├── searchSlice.test.js
+│       └── searchEpics.test.js
+├── App.js
+└── index.js
+```
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+### Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The autocomplete input includes a loading spinner and error toast (Ant Design).
 
-### Deployment
+The app supports debounced search using RxJS operators.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Search history persists in Redux and is displayed in a list.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Author
+Vicknesh Balasubramaniam
+https://github.com/roninprogrammer
