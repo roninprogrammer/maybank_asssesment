@@ -14,7 +14,7 @@ const CoreApp = () => {
     <>
       <PlaceSearch onSelect={setSelectedPlace} />
       <MapContainer place={selectedPlace} />
-      <SearchHistoryList />
+      <SearchHistoryList onSelect={setSelectedPlace} />
     </>
   );
 };
@@ -24,10 +24,36 @@ const App = () => (
     <LoadScript
       googleMapsApiKey="AIzaSyA3LcUpQm77vOjvbEbHSkA2li9V3DEA94M"
       libraries={['places']}
+      region="MY"
+      version="weekly"
     >
       {withLayout(CoreApp)()}
+      <HireMeBadge />
     </LoadScript>
   </Provider>
 );
+
+const HireMeBadge = () => (
+  <div
+    style={{
+      position: 'fixed',
+      bottom: '20px',
+      right: '20px',
+      backgroundColor: '#FFD500',
+      color: '#000',
+      fontWeight: 'bold',
+      fontSize: '14px',
+      padding: '10px 16px',
+      borderRadius: '8px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+      cursor: 'pointer',
+      zIndex: 9999,
+    }}
+    onClick={() => window.open('mailto:roninprogrammer@gmail.com')}
+  >
+    Built by Vicknesh – Hire Me
+  </div>
+);
+
 
 export default App;
