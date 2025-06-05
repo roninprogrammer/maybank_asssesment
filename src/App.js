@@ -23,7 +23,7 @@ const App = () => (
   <Provider store={store}>
     <LoadScript
       googleMapsApiKey="AIzaSyA3LcUpQm77vOjvbEbHSkA2li9V3DEA94M"
-      libraries={['places']}
+      libraries={['places', 'marker']} 
       region="MY"
       version="weekly"
     >

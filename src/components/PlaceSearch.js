@@ -32,7 +32,11 @@ const PlaceSearch = () => {
         size="large"
         placeholder="Search Places"
         enterButton
-        suffix={loading ? <Spin size="small" /> : null}
+        suffix={
+          <div style={{ visibility: loading ? 'visible' : 'hidden' }}>
+            <Spin size="small" />
+          </div>
+        }
       />
     </AutoComplete>
   );

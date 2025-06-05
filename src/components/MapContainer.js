@@ -1,71 +1,74 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import LocationButton from './LocationButton'; 
+import maybankMapStyle from '../map/maybankMapStyle';
 
 const MapContainer = ({ place }) => {
   const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const [isLocating, setIsLocating] = useState(false);
+
+  const initMap = (center) => {
+    mapInstance.current = new window.google.maps.Map(mapRef.current, {
+      center,
+      zoom: 14,
+      styles: maybankMapStyle,
+      mapId: 'AIzaSyA3LcUpQm77vOjvbEbHSkA2li9V3DEA94M',
+    });
+  };
+
+  const handleUseMyLocation = () => {
+    if (!navigator.geolocation) return alert('Geolocation not supported.');
+    setIsLocating(true);
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        const position = { lat: coords.latitude, lng: coords.longitude };
+        mapInstance.current.setCenter(position);
+
+ 
+        const pin = document.createElement('div');
+        pin.style.background = 'url(https://maps.google.com/mapfiles/ms/icons/yellow-dot.png)';
+        pin.style.width = '32px';
+        pin.style.height = '32px';
+        pin.style.backgroundSize = 'contain';
+
+        new window.google.maps.marker.AdvancedMarkerElement({
+          map: mapInstance.current,
+          position,
+          title: 'You are here',
+          content: pin,
+        });
+
+        setIsLocating(false);
+      },
+      () => {
+        alert('Location access denied.');
+        setIsLocating(false);
+      }
+    );
+  };
 
   useEffect(() => {
     if (!window.google || !mapRef.current) return;
-  
-    const map = new window.google.maps.Map(mapRef.current, {
-      center: { lat: 3.139, lng: 101.6869 },
-      zoom: 14,
-    });
-  
-    if (!place) return;
-  
+    initMap({ lat: 3.139, lng: 101.6869 });
+  }, []);
+
+  useEffect(() => {
+    if (!place || !window.google || !mapInstance.current) return;
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: place }, (results, status) => {
-      if (status === 'OK' && results[0]) {
+      if (status === 'OK') {
         const location = results[0].geometry.location;
-        map.setCenter(location);
-  
-        const service = new window.google.maps.places.PlacesService(map);
-        service.nearbySearch(
-          {
-            location,
-            radius: 3000,
-            keyword: 'Maybank ATM',
-            type: ['atm'],
-          },
-          (results, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-              const infoWindow = new window.google.maps.InfoWindow();
-  
-              results.forEach((atm) => {
-                if (atm.name.toLowerCase().includes('maybank')) {
-                  const marker = new window.google.maps.Marker({
-                    position: atm.geometry.location,
-                    map,
-                    title: atm.name,
-                    icon: {
-                      url: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-                    },
-                  });
-  
-                  marker.addListener('click', () => {
-                    infoWindow.setContent(`
-                      <div style="font-family: Roboto; font-size: 14px">
-                        <strong>${atm.name}</strong><br/>
-                        ${atm.vicinity || 'No address available'}
-                      </div>
-                    `);
-                    infoWindow.open(map, marker);
-                  });
-                }
-              });
-            }
-          }
-        );
+        mapInstance.current.setCenter(location);
       }
     });
   }, [place]);
-  
 
   return (
-    <div
-      ref={mapRef}
-      style={{ width: '100%', height: '400px', marginTop: '1rem' }}
-    />
+    <div style={{ position: 'relative' }}>
+      <div ref={mapRef} style={{ width: '100%', height: '400px' }} />
+      <LocationButton onClick={handleUseMyLocation} loading={isLocating} />
+    </div>
   );
 };
 
