@@ -5,7 +5,7 @@ import PlaceSearch from './components/PlaceSearch';
 import SearchHistoryList from './components/SearchHistoryList';
 import MapContainer from './components/MapContainer';
 import withLayout from './components/withLayout';
-import 'antd/dist/antd.css';
+
 
 const CoreApp = () => {
   const [selectedPlace, setSelectedPlace] = useState('');
