@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import PlaceSearch from './components/PlaceSearch';
+import SearchHistoryList from './components/SearchHistoryList';
+import MapContainer from './components/MapContainer';
+import withLayout from './components/withLayout';
+import 'antd/dist/antd.css';
 
-function App() {
+const CoreApp = () => {
+  const [selectedPlace, setSelectedPlace] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <PlaceSearch onSelect={setSelectedPlace} />
+      <MapContainer place={selectedPlace} />
+      <SearchHistoryList />
+    </>
   );
-}
+};
+
+const App = () => (
+  <Provider store={store}>
+    {withLayout(CoreApp)()}
+  </Provider>
+);
 
 export default App;
