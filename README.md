@@ -98,6 +98,15 @@ src/
 └── index.js
 ```
 
+## 🖼️ Demo Screenshot
+
+![Smart City Search](https://github.com/roninprogrammer/maybank_asssesment/blob/main/public/screenshot.png?raw=true)
+
+
+
+### Live deploy: 
+
+https://darling-fudge-2a7e8d.netlify.app/
 
 
 ### Notes
